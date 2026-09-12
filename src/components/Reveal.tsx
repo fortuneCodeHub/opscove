@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef } from "react";
 import type { CSSProperties, ReactNode } from "react";
+import { gsap } from "@/lib/gsap";
 
 type Props = {
   children: ReactNode;
@@ -9,6 +10,7 @@ type Props = {
   id?: string;
   className?: string;
   style?: CSSProperties;
+  mode?: "rise" | "wipe" | "scale" | "stagger";
   "aria-label"?: string;
 };
 
@@ -18,49 +20,58 @@ export default function Reveal({
   id,
   className,
   style,
+  mode = "rise",
   ...rest
 }: Props) {
-  const ref = useRef<HTMLElement | null>(null);
-  const [shown, setShown] = useState(false);
+  const ref = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
-
-    if (
-      typeof window === "undefined" ||
-      !("IntersectionObserver" in window) ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      setShown(true);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set(el, { autoAlpha: 1 });
       return;
     }
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setShown(true);
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -6% 0px", threshold: 0.05 }
-    );
+    const ctx = gsap.context(() => {
+      const trigger = { trigger: el, start: "top 82%", once: true };
 
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+      if (mode === "wipe") {
+        gsap.fromTo(
+          el,
+          { clipPath: "inset(0% 0% 100% 0%)", autoAlpha: 1 },
+          { clipPath: "inset(0% 0% 0% 0%)", duration: 1.25, ease: "expo.out", scrollTrigger: trigger }
+        );
+      } else if (mode === "scale") {
+        gsap.fromTo(
+          el,
+          { scale: 0.94, autoAlpha: 0, y: 40 },
+          { scale: 1, autoAlpha: 1, y: 0, duration: 1.2, ease: "expo.out", scrollTrigger: trigger }
+        );
+      } else if (mode === "stagger") {
+        gsap.set(el, { autoAlpha: 1 });
+        gsap.from(el.children, {
+          y: 56,
+          autoAlpha: 0,
+          duration: 1,
+          ease: "expo.out",
+          stagger: 0.09,
+          scrollTrigger: trigger,
+        });
+      } else {
+        gsap.fromTo(
+          el,
+          { y: 48, autoAlpha: 0 },
+          { y: 0, autoAlpha: 1, duration: 1.05, ease: "expo.out", scrollTrigger: trigger }
+        );
+      }
+    }, ref);
+
+    return () => ctx.revert();
+  }, [mode]);
 
   return (
-    <Tag
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ref={ref as any}
-      id={id}
-      className={`reveal${shown ? " is-in" : ""}${className ? ` ${className}` : ""}`}
-      style={style}
-      {...rest}
-    >
+    <Tag ref={ref as any} id={id} className={className} style={{ ...style, visibility: "hidden" }} {...rest}>
       {children}
     </Tag>
   );

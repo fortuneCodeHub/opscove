@@ -10,6 +10,14 @@ import {
   services,
   steps,
 } from "@/lib/content";
+import SplitHeading from "@/components/SplitHeading";
+import ParallaxImage from "@/components/ParallaxImage";
+import VelocityMarquee from "@/components/VelocityMarquee";
+import Counter from "@/components/Counter";
+import ThemeScroll from "@/components/ThemeScroll";
+import ServiceRows from "@/components/ServiceRows";
+import DeliveryRail from "@/components/DeliveryRail";
+import MagneticButton from "@/components/MagneticButton";
 
 const h2Style = {
   margin: 0,
@@ -66,23 +74,14 @@ function metricStyle(tone: (typeof metrics)[number]["tone"]) {
 export default function Page() {
   return (
     <>
-      <div className="marquee">
-        <div className="marquee__track">
-          {[0, 1].map((group) => (
-            <span key={group} className="marquee__group" aria-hidden={group === 1}>
-              {[...marqueeItems, ...marqueeItems].map((item, i) => (
-                <span key={`${group}-${i}`}>{item}</span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
+      <ThemeScroll />
+      <VelocityMarquee />
 
       <Header />
 
       <main id="top">
         {/* Hero */}
-        <Reveal style={{ position: "relative", padding: "clamp(44px,6vw,80px) 0 clamp(80px,9vw,130px)" }}>
+        <Reveal style={{ position: "relative", padding: "clamp(44px,6vw,80px) 0 clamp(80px,9vw,130px)" }} data-bg="#fafaf8">
           <div
             style={{
               maxWidth: "var(--max)",
@@ -112,7 +111,7 @@ export default function Page() {
                 Business process outsourcing since 2016
               </p>
 
-              <h1
+              <SplitHeading
                 style={{
                   margin: 0,
                   fontFamily: "var(--font-archivo-black)",
@@ -120,6 +119,7 @@ export default function Page() {
                   lineHeight: 1,
                   letterSpacing: "-.04em",
                 }}
+                as="h1"
               >
                 Outsourced support you will not have to{" "}
                 <span style={{ display: "inline-block", position: "relative", padding: "0 .08em" }}>
@@ -135,11 +135,12 @@ export default function Page() {
                       transform: "rotate(-.8deg)",
                       borderRadius: 2,
                     }}
+                    data-marker
                   />
                   <span style={{ position: "relative" }}>apologise</span>
                 </span>{" "}
                 for
-              </h1>
+              </SplitHeading>
 
               <p style={{ ...bodyStyle, margin: "26px 0 0", maxWidth: "60ch" }}>
                 OpsCove runs voice, helpdesk and back office teams from Mohali for UK and US companies. You start with a
@@ -147,12 +148,12 @@ export default function Page() {
               </p>
 
               <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 34 }}>
-                <a href="#book" className="btn btn--lime" style={{ fontSize: 16, padding: "16px 30px" }}>
+                <MagneticButton href="#book" className="btn btn--lime" style={{ fontSize: 16, padding: "16px 30px" }}>
                   Book a discovery call
-                </a>
-                <a href="#delivery" className="btn btn--outline" style={{ fontSize: 16, padding: "16px 30px" }}>
+                </MagneticButton>
+                <MagneticButton href="#delivery" className="btn btn--outline" style={{ fontSize: 16, padding: "16px 30px" }}>
                   See how a pilot works
-                </a>
+                </MagneticButton>
               </div>
             </div>
 
@@ -166,7 +167,7 @@ export default function Page() {
                   background: "var(--bg-alt)",
                 }}
               >
-                <Image
+                <ParallaxImage
                   src="/images/hero-floor.jpg"
                   alt="OpsCove agents working the support floor in Mohali"
                   fill
@@ -229,6 +230,7 @@ export default function Page() {
             borderBottom: "1px solid rgba(14,14,12,.12)",
             background: "var(--bg-alt)",
           }}
+          data-bg="#fafaf8"
         >
           <div
             className="shell"
@@ -277,7 +279,7 @@ export default function Page() {
         </Reveal>
 
         {/* Problem */}
-        <Reveal style={{ background: "var(--lime)", color: "var(--ink)", position: "relative", overflow: "hidden" }}>
+        <Reveal style={{ background: "var(--lime)", color: "var(--ink)", position: "relative", overflow: "hidden" }} data-bg="#c6f24e">
           <div className="shell" style={{ paddingTop: "clamp(80px,9vw,132px)", paddingBottom: "clamp(80px,9vw,132px)" }}>
             <div
               style={{
@@ -291,9 +293,9 @@ export default function Page() {
                 <p style={{ margin: "0 0 18px", fontSize: 12, letterSpacing: ".18em", textTransform: "uppercase", fontWeight: 700 }}>
                   Why people call us
                 </p>
-                <h2 style={{ ...h2Style, fontSize: "clamp(2.2rem,5.6vw,4rem)", lineHeight: 1.02, maxWidth: "14ch" }}>
+                <SplitHeading style={{ ...h2Style, fontSize: "clamp(2.2rem,5.6vw,4rem)", lineHeight: 1.02, maxWidth: "14ch" }}>
                   The last vendor let you down.
-                </h2>
+                </SplitHeading>
                 <p style={{ margin: "24px 0 0", maxWidth: "52ch", fontSize: "1.0625rem", lineHeight: 1.6 }}>
                   Most of our clients arrive from a provider that quoted a headcount and delivered a queue nobody
                   watched. Here is what we hear in the first call.
@@ -335,7 +337,7 @@ export default function Page() {
               }}
             >
               <div style={{ position: "relative", borderRadius: 20, overflow: "hidden", height: "clamp(200px,22vw,280px)", background: "var(--ink)" }}>
-                <Image
+                <ParallaxImage
                   src="/images/team-lead.jpg"
                   alt="Team lead reviewing the day's escalations"
                   fill
@@ -361,7 +363,7 @@ export default function Page() {
         </Reveal>
 
         {/* Services */}
-        <Reveal id="services" className="shell" style={{ paddingTop: "clamp(88px,10vw,148px)", paddingBottom: "clamp(88px,10vw,148px)" }}>
+        <Reveal id="services" className="shell" style={{ paddingTop: "clamp(88px,10vw,148px)", paddingBottom: "clamp(88px,10vw,148px)" }} data-bg="#fafaf8">
           <div
             style={{
               display: "grid",
@@ -371,36 +373,14 @@ export default function Page() {
               marginBottom: "clamp(40px,5vw,64px)",
             }}
           >
-            <h2 style={{ ...h2Style, maxWidth: "14ch" }}>What we run for you</h2>
+            <SplitHeading style={{ ...h2Style, maxWidth: "14ch" }}>What we run for you</SplitHeading>
             <p style={{ ...bodyStyle, margin: 0, maxWidth: "46ch" }}>
               Every line below is staffed by a named team with a dedicated lead, working your hours, reporting on your
               metrics.
             </p>
           </div>
 
-          <ul style={{ listStyle: "none", margin: 0, padding: 0, borderTop: "1px solid rgba(14,14,12,.16)" }}>
-            {services.map((row) => (
-              <li key={row.num} className="svc-row">
-                <div style={{ display: "flex", gap: "clamp(16px,2.5vw,36px)", alignItems: "baseline", minWidth: 0 }}>
-                  <span className="svc-row__num" style={{ fontFamily: "var(--font-archivo-black)" }}>
-                    {row.num}
-                  </span>
-                  <h3
-                    style={{
-                      margin: 0,
-                      fontFamily: "var(--font-archivo-black)",
-                      fontSize: "clamp(1.4rem,2.8vw,2.1rem)",
-                      lineHeight: 1.1,
-                      letterSpacing: "-.035em",
-                    }}
-                  >
-                    {row.title}
-                  </h3>
-                </div>
-                <p style={{ ...bodyStyle, margin: 0, maxWidth: "56ch" }}>{row.body}</p>
-              </li>
-            ))}
-          </ul>
+          <ServiceRows />
 
           <div
             style={{
@@ -411,7 +391,7 @@ export default function Page() {
             }}
           >
             <div style={{ position: "relative", borderRadius: 20, overflow: "hidden", height: "clamp(180px,20vw,240px)", background: "var(--bg-alt)" }}>
-              <Image src="/images/voice-bay.jpg" alt="Voice agents on shift" fill sizes="(max-width: 900px) 100vw, 33vw" style={{ objectFit: "cover" }} />
+              <ParallaxImage src="/images/voice-bay.jpg" alt="Voice agents on shift" fill sizes="(max-width: 900px) 100vw, 33vw" style={{ objectFit: "cover" }} />
             </div>
             <div
               style={{
@@ -423,7 +403,7 @@ export default function Page() {
                 marginTop: "clamp(0px,3vw,36px)",
               }}
             >
-              <Image src="/images/helpdesk.jpg" alt="Helpdesk bay handling tier two tickets" fill sizes="(max-width: 900px) 100vw, 33vw" style={{ objectFit: "cover" }} />
+              <ParallaxImage src="/images/helpdesk.jpg" alt="Helpdesk bay handling tier two tickets" fill sizes="(max-width: 900px) 100vw, 33vw" style={{ objectFit: "cover" }} />
             </div>
             <div
               style={{
@@ -456,47 +436,14 @@ export default function Page() {
         </Reveal>
 
         {/* Delivery */}
-        <Reveal id="delivery" style={{ background: "var(--bg-alt)" }}>
-          <div className="shell" style={{ paddingTop: "clamp(88px,10vw,148px)", paddingBottom: "clamp(88px,10vw,148px)" }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "space-between", alignItems: "end", marginBottom: "clamp(40px,5vw,64px)" }}>
-              <h2 style={{ ...h2Style, maxWidth: "15ch" }}>How a team starts and scales</h2>
-              <p style={{ ...bodyStyle, margin: 0, maxWidth: "38ch" }}>
-                Thirty days from first call to a team taking live contacts.
-              </p>
-            </div>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%,270px),1fr))",
-                gap: "clamp(24px,3vw,36px)",
-                alignItems: "start",
-              }}
-            >
-              {steps.map((step) => (
-                <article key={step.num} className="step-card" style={{ marginTop: step.offset }}>
-                  <div style={{ position: "relative", height: "clamp(170px,18vw,220px)", background: "#dcdcd6" }}>
-                    <Image src={step.image} alt={step.alt} fill sizes="(max-width: 900px) 100vw, 33vw" style={{ objectFit: "cover" }} />
-                  </div>
-                  <div style={{ padding: "24px 26px 30px" }}>
-                    <span style={{ fontFamily: "var(--font-archivo-black)", fontSize: 13, letterSpacing: ".1em", color: "var(--lime-deep)" }}>
-                      {step.num}
-                    </span>
-                    <h3 style={{ margin: "10px 0", fontSize: "1.35rem", letterSpacing: "-.025em", fontWeight: 700 }}>{step.title}</h3>
-                    <p style={{ ...bodyStyle, margin: 0 }}>{step.body}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </Reveal>
+        <DeliveryRail />
 
         {/* Proof */}
-        <Reveal id="proof" style={{ background: "var(--forest)", color: "var(--forest-ink)" }}>
+        <Reveal id="proof" style={{ background: "var(--forest)", color: "var(--forest-ink)" }} data-bg="#14342b">
           <div className="shell" style={{ paddingTop: "clamp(88px,10vw,148px)", paddingBottom: "clamp(88px,10vw,148px)" }}>
-            <h2 style={{ ...h2Style, marginBottom: "clamp(40px,5vw,64px)", maxWidth: "16ch" }}>
+            <SplitHeading style={{ ...h2Style, marginBottom: "clamp(40px,5vw,64px)", maxWidth: "16ch" }}>
               Numbers we report on, every week
-            </h2>
+            </SplitHeading>
 
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "stretch" }}>
               {metrics.map((m, i) => (
@@ -521,7 +468,7 @@ export default function Page() {
                       letterSpacing: "-.05em",
                     }}
                   >
-                    {m.value}
+                    <Counter value={m.value} />
                   </div>
                   <p style={{ margin: "12px 0 0", fontSize: 15, lineHeight: 1.5, maxWidth: "20ch" }}>{m.label}</p>
                 </div>
@@ -531,15 +478,15 @@ export default function Page() {
         </Reveal>
 
         {/* Testimonial */}
-        <Reveal style={{ background: "var(--bg)" }}>
+        <Reveal style={{ background: "var(--bg)" }} data-bg="#fafaf8">
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%,380px),1fr))", alignItems: "stretch" }}>
             <div style={{ position: "relative", minHeight: "clamp(320px,38vw,540px)", background: "var(--bg-alt)" }}>
-              <Image
+              <ParallaxImage
                 src="/images/client-team.jpg"
                 alt="Client operations team at their Leeds office"
                 fill
                 sizes="(max-width: 900px) 100vw, 50vw"
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "cover", borderRadius: "0 0 0 0" }}
               />
             </div>
             <div
@@ -579,7 +526,7 @@ export default function Page() {
                       background: "#dcdcd6",
                     }}
                   >
-                    <Image src="/images/ruth-marsden.jpg" alt="" fill sizes="56px" style={{ objectFit: "cover" }} />
+                    <ParallaxImage src="/images/ruth-marsden.jpg" alt="" fill sizes="56px" style={{ objectFit: "cover" }} />
                   </span>
                   <span style={{ fontSize: 15, lineHeight: 1.45 }}>
                     <strong style={{ display: "block", fontWeight: 700 }}>Ruth Marsden</strong>
@@ -592,7 +539,7 @@ export default function Page() {
         </Reveal>
 
         {/* FAQ */}
-        <Reveal id="faq" className="shell" style={{ paddingTop: "clamp(88px,10vw,148px)", paddingBottom: "clamp(88px,10vw,148px)" }}>
+        <Reveal id="faq" className="shell" style={{ paddingTop: "clamp(88px,10vw,148px)", paddingBottom: "clamp(88px,10vw,148px)" }} data-bg="#fafaf8">
           <div
             style={{
               display: "grid",
@@ -602,7 +549,7 @@ export default function Page() {
             }}
           >
             <div>
-              <h2 style={{ ...h2Style, maxWidth: "12ch" }}>What buyers ask us first</h2>
+              <SplitHeading style={{ ...h2Style, maxWidth: "12ch" }}>What buyers ask us first</SplitHeading>
               <p style={{ ...bodyStyle, margin: "22px 0 0", maxWidth: "36ch" }}>
                 If your question is not here, put it in the discovery call and we will answer it on the spot.
               </p>
@@ -612,7 +559,7 @@ export default function Page() {
         </Reveal>
 
         {/* CTA */}
-        <Reveal id="book" style={{ background: "var(--forest)", color: "var(--forest-ink)" }}>
+        <Reveal id="book" style={{ background: "var(--forest)", color: "var(--forest-ink)" }} data-bg="#14342b">
           <div
             className="shell"
             style={{
@@ -624,9 +571,9 @@ export default function Page() {
               alignItems: "center",
             }}
           >
-            <h2 style={{ ...h2Style, fontSize: "clamp(2.2rem,5.4vw,4rem)", lineHeight: 1.02, maxWidth: "15ch" }}>
+            <SplitHeading style={{ ...h2Style, fontSize: "clamp(2.2rem,5.4vw,4rem)", lineHeight: 1.02, maxWidth: "15ch" }}>
               Bring us your worst queue. We will scope a pilot.
-            </h2>
+            </SplitHeading>
             <div>
               <a
                 href="mailto:contactus@opscovesolutions.com"
@@ -644,7 +591,7 @@ export default function Page() {
         </Reveal>
       </main>
 
-      <footer style={{ background: "var(--forest)", color: "var(--forest-ink)", borderTop: "1px solid rgba(244,246,242,.16)" }}>
+      <footer style={{ background: "var(--forest)", color: "var(--forest-ink)", borderTop: "1px solid rgba(244,246,242,.16)" }} data-bg="#fafaf8">
         <div className="shell" style={{ paddingTop: "clamp(56px,7vw,92px)", paddingBottom: 40 }}>
           <a
             href="mailto:contactus@opscovesolutions.com"
@@ -680,7 +627,7 @@ export default function Page() {
               </p>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, fontSize: 15 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, fontSize: 15 }} className="footer__links">
               <span style={{ fontSize: 12, letterSpacing: ".16em", textTransform: "uppercase", color: "#8fa99b", fontWeight: 700 }}>Services</span>
               <a href="#services">Voice support</a>
               <a href="#services">Helpdesk</a>
@@ -688,7 +635,7 @@ export default function Page() {
               <a href="#services">Medical billing</a>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, fontSize: 15 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, fontSize: 15 }} className="footer__links">
               <span style={{ fontSize: 12, letterSpacing: ".16em", textTransform: "uppercase", color: "#8fa99b", fontWeight: 700 }}>Company</span>
               <a href="#delivery">Delivery model</a>
               <a href="#proof">Reporting</a>
