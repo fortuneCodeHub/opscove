@@ -1,0 +1,18 @@
+# 1. create .gitignore
+@"
+node_modules/
+.next/
+out/
+build/
+.env*
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+"@ | Out-File -Encoding utf8 .gitignore
+
+# 2. remove the junk from git's index, keep it on disk
+git rm -r --cached .
+
+# 3. re-add only what's left
+git add .
+git commit -m "Add gitignore, remove node_modules from tracking"
